@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AlvicomHomework_Mora:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AlvicomHomework_Mora_jar</output-path>
+    <root id="archive" name="AlvicomHomework_Mora.jar">
+      <element id="module-output" name="AlvicomHomework_Mora" />
+    </root>
+  </artifact>
+</component>
