@@ -8,12 +8,14 @@ public class Transaction implements Serializable {
     private double amount;
     private double rate;
     private double newBalanceOfAcc;
+    private boolean flag;
 
     public Transaction(String accountNumber, String currency, double amount, double rate) {
         this.accountNumber = accountNumber;
         this.currency = currency;
         this.amount = amount;
         this.rate = rate;
+        this.flag = true;
     }
 
     public String getAccountNumber() {
@@ -44,13 +46,11 @@ public class Transaction implements Serializable {
         this.newBalanceOfAcc = newBalanceOfAcc;
     }
 
-    @Override
-    public String toString() {
-        return "Tranzakciós üzenet:{" +
-                "Számlaszám: " + accountNumber +
-                ", Pénznem: " + currency +
-                ", Összeg: " + amount +
-                ", Valutaárfolyam: " + rate +
-                '}';
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }

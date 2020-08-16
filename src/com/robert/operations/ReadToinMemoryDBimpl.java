@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ReadToinMemoryDBimpl implements ReadToinMemoryDB{
 
     public ArrayList<Transaction> readIn(){
-        String csvFile = "C:/Spring/AlvicomHomework_Mora/transactions.csv";
+        String csvFile = "C:/Spring/AlvicomHomework_Mora/transactions.csv"; //az úvonalat a megfelelő útvonalra szükséges beállítani
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";

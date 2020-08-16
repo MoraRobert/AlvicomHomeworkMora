@@ -12,19 +12,19 @@ public class OperateOnAccounts {
 
     public void changeBalance(Accounts accounts, ArrayList<Transaction> transactions){
         int count = 1;
-
+        double amountToDeposit;
         for (Transaction trs : transactions) {
             for (Account acc : accounts.getListOfAccounts()) {
                 if(trs.getAccountNumber().equalsIgnoreCase(acc.getAccountNumber())){
                     if (!trs.getCurrency().equalsIgnoreCase(acc.getCurrency())){
-                        trs.setAmount( (trs.getAmount() * trs.getRate()) );
-                    }
-                    if (trs.getAmount() < 0 && acc.getBalance() < Math.abs(trs.getAmount())){
-                        System.out.println("A " + count + ". tranzakció nem hajtható végre, nincs rá fedezet.");
+                        amountToDeposit = trs.getAmount() * trs.getRate();
+                    } else amountToDeposit = trs.getAmount();
+                    if (amountToDeposit < 0 && acc.getBalance() < Math.abs(amountToDeposit)){
+                        trs.setFlag(false);
                         trs.setNewBalanceOfAcc(acc.getBalance());
                         System.out.println();
                     } else {
-                        acc.setBalance(acc.getBalance() + trs.getAmount());
+                        acc.setBalance(acc.getBalance() + amountToDeposit);
                         trs.setNewBalanceOfAcc(acc.getBalance());
                         count++;
                     }
@@ -40,13 +40,18 @@ public class OperateOnAccounts {
 
     public void printToConsole(Accounts accounts, ArrayList<Transaction> transactions, int i){
         DecimalFormat df = new DecimalFormat("###,###,###.##");
+        String detail = "";
         for (Account acc: accounts.getListOfAccounts()) {
             System.out.println("A " + acc.getAccountNumber() + " számú számlán végrehajtott műveletek: ");
             for (int j = 0; j < i; j++) {
                 if (transactions.get(j).getAccountNumber().equals(acc.getAccountNumber())){
-                    System.out.println("Egyenleg változás: "
-                            + df.format(transactions.get(j).getAmount() )
-                            + "     Új egyenleg: " + df.format(transactions.get(j).getNewBalanceOfAcc()));
+                    if (transactions.get(j).isFlag()) detail = "";
+                    else detail = "    A tranzakció nem hajtható végre, nincs rá fedezet.";
+                    System.out.println(df.format(transactions.get(j).getAmount()) + " " + transactions.get(j).getCurrency() +
+                            "       Egyenleg változás: "
+                            + df.format(transactions.get(j).getAmount() * transactions.get(j).getRate()) + " " + acc.getCurrency()
+                            + "     Új egyenleg: " + df.format(transactions.get(j).getNewBalanceOfAcc()) + " " + acc.getCurrency()
+                            + detail);
                 }
             }
             System.out.println();
